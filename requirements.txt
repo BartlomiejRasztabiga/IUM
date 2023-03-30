@@ -2,6 +2,7 @@
 # $ conda create --name <env> --file <this file>
 # platform: osx-64
 anyio=3.5.0=py310hecd8cb5_0
+appdirs=1.4.4=pyhd3eb1b0_0
 appnope=0.1.2=py310hecd8cb5_1001
 argon2-cffi=21.3.0=pyhd3eb1b0_0
 argon2-cffi-bindings=21.2.0=py310hca72f7f_0
@@ -47,6 +48,7 @@ ipython_genutils=0.2.0=pyhd3eb1b0_1
 ipywidgets=8.0.4=py310hecd8cb5_0
 jedi=0.18.1=py310hecd8cb5_1
 jinja2=3.1.2=py310hecd8cb5_0
+joblib=1.1.1=py310hecd8cb5_0
 jpeg=9e=h6c40b1e_1
 json5=0.9.6=pyhd3eb1b0_0
 jsonschema=4.17.3=py310hecd8cb5_0
@@ -71,6 +73,8 @@ libcxx=14.0.6=h9765a3e_0
 libdeflate=1.17=hb664fd8_0
 libedit=3.1.20221030=h6c40b1e_0
 libffi=3.4.2=hecd8cb5_6
+libgfortran=5.0.0=11_3_0_hecd8cb5_28
+libgfortran5=11.3.0=h9dfd629_28
 libiconv=1.16=hca72f7f_2
 libllvm12=12.0.0=h9b2ccf5_3
 libpng=1.6.39=h6c40b1e_0
@@ -119,6 +123,7 @@ pillow=9.4.0=py310hcec6c5f_0
 pip=23.0.1=py310hecd8cb5_0
 platformdirs=2.5.2=py310hecd8cb5_0
 ply=3.11=py310hecd8cb5_0
+pooch=1.4.0=pyhd3eb1b0_0
 prometheus_client=0.14.1=py310hecd8cb5_0
 prompt-toolkit=3.0.36=py310hecd8cb5_0
 prompt_toolkit=3.0.36=hd3eb1b0_0
@@ -145,6 +150,8 @@ qtpy=2.2.0=py310hecd8cb5_0
 qtwebkit=5.212=h24dc246_4
 readline=8.2=hca72f7f_0
 requests=2.28.1=py310hecd8cb5_1
+scikit-learn=1.2.1=py310hcec6c5f_0
+scipy=1.10.0=py310h64422d5_1
 seaborn=0.12.2=py310hecd8cb5_0
 send2trash=1.8.0=pyhd3eb1b0_1
 setuptools=65.6.3=py310hecd8cb5_0
@@ -155,6 +162,7 @@ soupsieve=2.3.2.post1=py310hecd8cb5_0
 sqlite=3.41.1=h6c40b1e_0
 stack_data=0.2.0=pyhd3eb1b0_0
 terminado=0.17.1=py310hecd8cb5_0
+threadpoolctl=2.2.0=pyh0d69192_0
 tinycss2=1.2.1=py310hecd8cb5_0
 tk=8.6.12=h5d9f67b_0
 toml=0.10.2=pyhd3eb1b0_0
