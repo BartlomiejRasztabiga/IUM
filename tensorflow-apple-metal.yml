@@ -1,4 +1,4 @@
-name: tensorflow
+name: IUM
 channels:
   - apple
   - conda-forge
@@ -25,3 +25,5 @@ dependencies:
         - bayesian-optimization
         - gym
         - kaggle
+        - keras-tuner
+        - protobuf==3.20.*
