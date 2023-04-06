@@ -2,7 +2,7 @@
 
 ### Definicja problemu biznesowego
 
-Przewidywanie, czy dany użytkownik przewinie dany utwór czy przesłucha go do końca. Jest to dalej wykorzystywane do odpowiedniego rozłożenia utworów w cache'u.
+Przewidywanie, czy dany użytkownik przewinie dany utwór czy przesłucha go do końca. Będzie to dalej wykorzystywane do odpowiedniego rozłożenia utworów w cache'u. Rozłożenie w cache'u nie jest jednak celem projektu.
 
 ### Zdefiniowanie zadania modelowania
 
@@ -10,7 +10,7 @@ Przygotowanie modelu klasyfikacji binarnej na podstawie logu zdarzeń użytkowni
 
 ### Zdefiniowanie założeń
 
-// TODO
+Wykorzystana zostanie głównie zależność między ulubionymi gatunkami użytkownika a gatunkami przypisanymi do wykonawcy.
 
 ### Zaproponowanie kryteriów sukcesu
 
