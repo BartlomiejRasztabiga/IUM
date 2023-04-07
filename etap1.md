@@ -19,4 +19,4 @@ Wykorzystana zostanie głównie zależność między ulubionymi gatunkami użytk
 
 ### Analiza danych
 
-Znajduje się w notatnikach `data_analysis.ipynb` oraz `data_processin.ipynb`.
+Znajduje się w notatnikach `notebooks/data_analysis.ipynb` oraz `notebooks/data_processing.ipynb`.
