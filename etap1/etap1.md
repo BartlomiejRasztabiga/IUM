@@ -21,6 +21,8 @@ Wykorzystana zostanie głównie zależność między ulubionymi gatunkami użytk
 
 Wartość 65% została oszacowana przez zastosowanie prostego modelu klasyfikacji (random forest) na podstawie danych dla 50 użytkowników.
 
+Procent utworów pominiętych w zbiorze treningowym wynosi 50%, więc technicznie model, który zawsze przewiduje pominięcie utworu, osiągnie 50% trafności. W związku z tym, aby model był użyteczny, musi przewidywać pominięcie utworu lepiej niż model losowy.
+
 #### Kryterium biznesowe
 
 Redukcja opóźnień odtwarzania utworów, w porównaniu do systemu bez predykcji, poprzez optymalizację wykorzystania pamięci podręcznej. Piosenki, które użytkownik prawdopodobnie pominie, nie będą pobierane do cache.
