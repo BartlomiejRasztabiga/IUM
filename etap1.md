@@ -14,8 +14,16 @@ Wykorzystana zostanie głównie zależność między ulubionymi gatunkami użytk
 
 ### Zaproponowanie kryteriów sukcesu
 
+#### Kryterium analityczne
+
 α = liczba trafnych predykcji / liczba wszystkich predykcji
 α >= 0.65
+
+Wartość 65% została oszacowana przez zastosowanie prostego modelu klasyfikacji (random forest) na podstawie danych dla 50 użytkowników.
+
+#### Kryterium biznesowe
+
+Redukcja opóźnień odtwarzania utworów, w porównaniu do systemu bez predykcji, poprzez optymalizację wykorzystania pamięci podręcznej. Piosenki, które użytkownik prawdopodobnie pominie, nie będą pobierane do cache.
 
 ### Analiza danych
 
