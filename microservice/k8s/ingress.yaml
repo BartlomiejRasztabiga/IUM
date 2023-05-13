@@ -6,6 +6,7 @@ spec:
   rules:
     - host: ium.rasztabiga.me
       http:
+        paths:
           - path: /
             pathType: Prefix
             backend:
