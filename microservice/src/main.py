@@ -23,28 +23,28 @@ app.add_middleware(
 )
 
 # loading model 1
-with open("../../models/model.pickle", "rb") as f:
+with open("./models/model.pickle", "rb") as f:
     model_1 = pickle.load(f)
 
-with open("../../models/model_mlb.pickle", "rb") as f:
+with open("./models/model_mlb.pickle", "rb") as f:
     mlb_1 = pickle.load(f)
 
-with open('../../models/model_genre_to_cluster.pickle', 'rb') as f:
+with open('./models/model_genre_to_cluster.pickle', 'rb') as f:
     genre_to_cluster_1 = pickle.load(f)
 
-with open('../../models/model_clustered_genres.pickle', 'rb') as f:
+with open('./models/model_clustered_genres.pickle', 'rb') as f:
     clustered_genres_1 = pickle.load(f)
 
 # loading model 2
-model_2 = keras.models.load_model("../../models/model2.h5")
+model_2 = keras.models.load_model("./models/model2.h5")
 
-with open("../../models/model2_mlb.pickle", "rb") as f:
+with open("./models/model2_mlb.pickle", "rb") as f:
     mlb_2 = pickle.load(f)
 
-with open('../../models/model2_genre_to_cluster.pickle', 'rb') as f:
+with open('./models/model2_genre_to_cluster.pickle', 'rb') as f:
     genre_to_cluster_2 = pickle.load(f)
 
-with open('../../models/model2_clustered_genres.pickle', 'rb') as f:
+with open('./models/model2_clustered_genres.pickle', 'rb') as f:
     clustered_genres_2 = pickle.load(f)
 
 models = {
