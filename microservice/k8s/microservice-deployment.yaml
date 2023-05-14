@@ -13,11 +13,11 @@ spec:
         app: microservice
     spec:
       containers:
-        - image: ghcr.io/bartlomiejrasztabiga/ium/microservice:sha-0be0f55
+        - image: ghcr.io/bartlomiejrasztabiga/ium/microservice:sha-6f1c9e6
           name: microservice
           ports:
             - containerPort: 80
           env:
             - name: MONGODB_URI
-              value: "mongodb://root:password@db:27017/ium"
+              value: "mongodb://root:password@db:27017/ium?authSource=admin"
       restartPolicy: Always

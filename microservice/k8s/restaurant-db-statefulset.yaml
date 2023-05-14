@@ -17,7 +17,7 @@ spec:
         - image: mongo:6.0.5
           name: db
           ports:
-            - containerPort: 27101
+            - containerPort: 27017
           volumeMounts:
             - mountPath: /data/db
               name: db-data
