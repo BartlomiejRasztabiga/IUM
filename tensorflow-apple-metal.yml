@@ -27,4 +27,5 @@ dependencies:
         - gym
         - kaggle
         - keras-tuner
+        - tensorboard
         - protobuf==3.20.*
