@@ -1,3 +1,4 @@
+import datetime
 import os
 import pickle
 from typing import List
@@ -89,10 +90,18 @@ class Input(BaseModel):
     favourite_genres: List[str]
 
 
+class ABResult(BaseModel):
+    created_at: datetime.datetime
+    user_id: int
+    group: int
+    model: int
+    input: Input
+    prediction: bool
+
+
 @app.post("/ab_test")
 def ab_test(input: Input, user_id: int):
     group = user_id % 2
-    prediction = None
     if group == 0:
         prediction = model1_predict(input)["skipped"]
     else:
@@ -108,6 +117,12 @@ def ab_test(input: Input, user_id: int):
     })
 
     return {"skipped": prediction}
+
+
+@app.get("/ab_test/results")
+def ab_test_results() -> List[ABResult]:
+    predictions = list(predictions_collection.find({}))
+    return predictions
 
 
 @app.post("/models/{model_id}/predict")
