@@ -17,4 +17,7 @@ spec:
           name: microservice
           ports:
             - containerPort: 80
+          env:
+            - name: MONGODB_URI
+              value: "mongodb://root:password@db:27017/ium"
       restartPolicy: Always

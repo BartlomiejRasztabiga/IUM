@@ -1,3 +1,4 @@
+import os
 import pickle
 from typing import List
 
@@ -5,8 +6,23 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from tensorflow import keras
+from pymongo import MongoClient
 import numpy as np
 import pandas as pd
+
+
+def get_database():
+    MONGODB_URI = os.environ.get('MONGODB_URI')
+    if not MONGODB_URI:
+        MONGODB_URI = "mongodb://root:password@localhost:27017/ium?authSource=admin"
+
+    client = MongoClient(MONGODB_URI)
+
+    return client['ium']
+
+
+db = get_database()
+predictions_collection = db['predictions']
 
 app = FastAPI()
 
@@ -73,7 +89,28 @@ class Input(BaseModel):
     favourite_genres: List[str]
 
 
-@app.post("/predict/{model_id}")
+@app.post("/ab_test")
+def ab_test(input: Input, user_id: int):
+    group = user_id % 2
+    prediction = None
+    if group == 0:
+        prediction = model1_predict(input)["skipped"]
+    else:
+        prediction = model2_predict(input)["skipped"]
+
+    predictions_collection.insert_one({
+        "created_at": pd.Timestamp.now(),
+        "user_id": user_id,
+        "group": group,
+        "model": group + 1,
+        "input": input.dict(),
+        "prediction": prediction
+    })
+
+    return {"skipped": prediction}
+
+
+@app.post("/models/{model_id}/predict")
 def predict(model_id: int, input: Input):
     if model_id == 1:
         return model1_predict(input)
@@ -118,7 +155,6 @@ def model2_predict(input: Input):
 
     data = pd.DataFrame([input.dict()])
 
-    # Apply the mapping function to both 'genres' and 'favourite_genres' columns
     data['genres'] = data['genres'].apply(
         lambda x: [map_genre(genre, genre_to_cluster, clustered_genres) for genre in x])
     data['favourite_genres'] = data['favourite_genres'].apply(
@@ -139,6 +175,5 @@ def model2_predict(input: Input):
 
 def map_genre(genre, genre_to_cluster, clustered_genres):
     cluster_label = genre_to_cluster[genre]
-    representative_genre = clustered_genres[cluster_label][
-        0]  # Use the first genre in the cluster as the representative
+    representative_genre = clustered_genres[cluster_label][0]
     return representative_genre
