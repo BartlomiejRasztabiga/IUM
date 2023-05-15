@@ -17,7 +17,7 @@ Wykorzystana zostanie głównie zależność między ulubionymi gatunkami użytk
 #### Kryterium analityczne
 
 α = liczba trafnych predykcji / liczba wszystkich predykcji
-α >= 0.65
+α >= 0.65[etap1.md](etap1.md)
 
 Wartość 65% została oszacowana przez zastosowanie prostego modelu klasyfikacji (random forest) na podstawie danych dla 50 użytkowników.
 
