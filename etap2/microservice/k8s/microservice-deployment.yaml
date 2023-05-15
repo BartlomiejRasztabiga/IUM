@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice
+  template:
+    metadata:
+      labels:
+        app: microservice
+    spec:
+      containers:
+        - image: ghcr.io/bartlomiejrasztabiga/ium/microservice:sha-8734da7
+          name: microservice
+          ports:
+            - containerPort: 80
+          env:
+            - name: MONGODB_URI
+              value: "mongodb://root:password@db:27017/ium?authSource=admin"
+      restartPolicy: Always

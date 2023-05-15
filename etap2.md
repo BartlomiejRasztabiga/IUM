@@ -1,5 +1,8 @@
 # IUM
 
+Piotr Brzeziński      - 310606
+Bartłomiej Rasztabiga - 304117
+
 ## Etap 2
 
 ## Raport z budowy modeli
@@ -28,7 +31,7 @@ Dane v3 nie zostały użyte z powodu ich zbyt dużego rozmiaru dla dostępnych z
 
 ### Model 1
 
-Definicja pierwszego modelu znajduje się w pliku notebooks/model.ipynb
+Definicja pierwszego modelu znajduje się w pliku `notebooks/model.ipynb`
 
 Jest to RandomForest z 100 drzewami.
 
@@ -93,7 +96,7 @@ Jest to wielowarstwowy perceptron z 2 warstwami ukrytymi, po których występuje
 
 Liczby neuronów w warstwach ukrytych zostały dobrane w procesie strojenia i wynoszą 111 i 41.
 
-Funkcje aktywacji warstw ukrytych to relu, a warstwy wyjściowej to sigmoid.
+Funkcje aktywacji warstw ukrytych to `relu`, a warstwy wyjściowej to `sigmoid`.
 
 Learning rate został dobrany w procesie strojenia i wynosi 0.003.
 
@@ -209,7 +212,7 @@ weighted avg       0.72      0.71      0.70      7242
 
 ## Porównanie modeli
 
-Jak można zauważyć, model 2 osiąga lepsze wyniki niż model 1 na danych walidaycyjnych.
+Jak można zauważyć, model 2 osiąga lepsze wyniki niż model 1 na danych walidacyjnych.
 
 Model 1 osiąga jednak lepsze wyniki na danych treningowych, co może wskazywać na lepsze dopasowanie się do wzorca w danych.
 
@@ -277,13 +280,16 @@ Wyniki strojenia:
 
 ## Implementacja mikroserwisu
 
+Mikroserwis został zaimplementowany w języku Python z wykorzystaniem frameworka FastAPI.
+Wykorzystana baza danych to MongoDB.
+
 ### Endpointy
 ##### W pliku `IUM.postman_collection.json` znajduje się kolekcja Postmana zawierająca wszystkie endpointy, gotowa do przetestowania.
 
 #### `POST /ab_test?user_id={user_id}`
 Służy do zbierania danych do testów A/B. Zwraca wynik predykcji dla podanych danych wejściowych (`genres/favourite_genres`).
 
-Parametr w URL: `user_id` - (ID użytkownika)
+Parametr w URL: `user_id` - (ID użytkownika na podstawie którego dobierana jest grupa testowa)
 Przykładowe body:
 ```
 {
@@ -318,14 +324,29 @@ Zwraca rezultat działania modelu oznaczonego `{model_id}` (1 - RandomForest, 2 
 Przykładowa odpowiedź: `{"skipped": false}`
 
 ### Deployment
-Cały mikroserwis został wzdrożony pod adresem https://ium.rasztabiga.me z użyciem Kubernetesa.
+Cały mikroserwis został wzdrożony pod adresem https://ium.rasztabiga.me z użyciem klastra Kubernetes.
 
 Do uruchomienia lokalnej instancji należy mieć zainstalowanego Dockera. 
-Po przejściu do folderu `microservice/` należy zainstalować wymagane pakiety Pythona poleceniem `pip install -r requirements.txt`. Następnie uruchamiamy bazę danych (MongoDB) poleceniem `docker-compose up` oraz sam mikroserwis zbudowany z użyciem FastAPI poleceniem `./run.sh`.
+Po przejściu do folderu `microservice/` należy zainstalować wymagane pakiety Pythona poleceniem `pip install -r requirements.txt`. Następnie uruchamiamy bazę danych poleceniem `docker-compose up` oraz sam mikroserwis zbudowany z użyciem poleceniem `./run.sh`.
+
+Aby wdrożyć mikroserwis na własny klaster Kubernetes, należy przejść do folderu `microservice/k8s` oraz uruchomić polecenie `kubectl apply -f . -n {{nazwa_namespacu}}`
 
 ## Testy A/B
 
 Proces przeprowadzania testów A/B zawarty został w pliku `ab.ipynb`.
 
-Do testów, ze względu
-// TODO testy a/b sa w pliku ab.ipynb
+Do testów, ze względu na ograniczoną wydajność po stronie zdeployowanego mikroserwisu (długi czas generowania predykcji), używamy 10% z całego zestawu danych.
+
+Dla każdego wiersza z danymi przygotowujemy i wysyłamy request na endpoint `POST /ab_test?user_id={user_id}`. Na podstawie `user_id` ustalamy grupę do której należy (`group = user_id % 2`) i zapisujemy wynik zapytania, wraz z faktyczną wartością `skipped`, do listy należącej do tej grupy.
+
+Następnie liczymy dokładność dla każdej grupy, po czym na jej podstawie przeprowadzamy test t-Studenta i sprawdzamy, czy odrzucamy hipotezę zerową mówiącą, przez co możemy stwierdzić, czy dokładność modelu A jest większa niż modelu B.
+
+#### Wyniki testów:
+```
+Group A accuracy: 0.7616438356164383
+Group B accuracy: 0.6709470304975923
+
+Wartość t-statystyki: 3.026444516084243
+Wartość p-value: 0.001269366320691488
+Odrzucamy hipotezę zerową. Dokładność modelu A jest większa niż modelu B.
+```
