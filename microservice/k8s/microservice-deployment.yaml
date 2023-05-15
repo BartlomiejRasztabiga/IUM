@@ -13,7 +13,7 @@ spec:
         app: microservice
     spec:
       containers:
-        - image: ghcr.io/bartlomiejrasztabiga/ium/microservice:sha-406f8a4
+        - image: ghcr.io/bartlomiejrasztabiga/ium/microservice:sha-8734da7
           name: microservice
           ports:
             - containerPort: 80
