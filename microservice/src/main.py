@@ -118,6 +118,9 @@ def ab_test(input: Input, user_id: int):
 
     return {"skipped": prediction}
 
+@app.delete("/ab_test/results")
+def ab_test_clear_results(input: Input, user_id: int):
+    predictions_collection.delete_many({})
 
 @app.get("/ab_test/results")
 def ab_test_results() -> List[ABResult]:
