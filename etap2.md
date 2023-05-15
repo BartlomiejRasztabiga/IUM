@@ -1,16 +1,42 @@
 # IUM
 
-https://gitlab-stud.elka.pw.edu.pl/jzielins/ium/-/tree/main/
-https://gitlab-stud.elka.pw.edu.pl/bkrawcz1/ium-23l
-
 ## Etap 2
 
-## Raport z budowy modeli???
+## Raport z budowy modeli
 
+### Preprocessing danych
+
+Wykorzystywane są dwie kolumny z logu zdarzeń użytkownika:
+- genres
+- favourite_genres
+
+Predykowaną klasą jest kolumna skipped.
+
+Aby ograniczyć liczbę klas, zastosowaliśmy klastrowanie metodą k-means. Liczba klastrów została dobrana eksperymentalnie i wynosi 100.
+
+Aby zmniejszyć wpływ klasy większościowej, zastosowaliśmy balansowanie danych w proporcji 1:1.
+
+Kolumny genres i favourite_genres zawierają listy gatunków. Zastosowaliśmy one-hot encoding, aby uzyskać macierz binarną.
+
+### Podział danych
+
+Dane zostały podzielone na zbiór treningowy i testowy w proporcji 80/20.
+
+Oba modele trenowane były na danych v2 (dla 50 użytkowników).
+
+Dane v3 nie zostały użyte z powodu ich zbyt dużego rozmiaru dla dostępnych zasobów.
 
 ### Model 1
 
-RandomForest(100 drzew)
+Definicja pierwszego modelu znajduje się w pliku notebooks/model.ipynb
+
+Jest to RandomForest z 100 drzewami.
+
+```
+model = RandomForestClassifier(random_state=42)
+```
+
+Poniżej wyniki dla zbiorów testowego, treningowego i wszystkich danych.
 
 ```
 TEST
@@ -27,80 +53,279 @@ Classification report:
     accuracy                           0.62      1449
    macro avg       0.62      0.62      0.62      1449
 weighted avg       0.62      0.62      0.62      1449
-```
 
+TRAIN
+Accuracy: 0.8529259451061626
+Confusion matrix:
+ [[2465  435]
+ [ 417 2476]]
+Classification report:
+               precision    recall  f1-score   support
+
+           0       0.86      0.85      0.85      2900
+           1       0.85      0.86      0.85      2893
+
+    accuracy                           0.85      5793
+   macro avg       0.85      0.85      0.85      5793
+weighted avg       0.85      0.85      0.85      5793
+
+ALL
+Accuracy: 0.8054404860535763
+Confusion matrix:
+ [[2903  718]
+ [ 691 2930]]
+Classification report:
+               precision    recall  f1-score   support
+
+           0       0.81      0.80      0.80      3621
+           1       0.80      0.81      0.81      3621
+
+    accuracy                           0.81      7242
+   macro avg       0.81      0.81      0.81      7242
+weighted avg       0.81      0.81      0.81      7242
+```
 
 ### Model 2
 
-MLP  111,41 0.003, dropout(0.5)
+Definicja drugiego modelu znajduje się w pliku notebooks/model2.ipynb
 
-```Epoch 1/20
-182/182 - 3s - loss: 0.6826 - accuracy: 0.5584 - val_loss: 0.6618 - val_accuracy: 0.6046 - 3s/epoch - 18ms/step
-Epoch 2/20
-182/182 - 1s - loss: 0.6615 - accuracy: 0.5909 - val_loss: 0.6458 - val_accuracy: 0.6563 - 1s/epoch - 8ms/step
-Epoch 3/20
-182/182 - 1s - loss: 0.6483 - accuracy: 0.6151 - val_loss: 0.6375 - val_accuracy: 0.6536 - 1s/epoch - 7ms/step
-Epoch 4/20
-182/182 - 1s - loss: 0.6379 - accuracy: 0.6263 - val_loss: 0.6362 - val_accuracy: 0.6598 - 1s/epoch - 7ms/step
-Epoch 5/20
-182/182 - 1s - loss: 0.6290 - accuracy: 0.6377 - val_loss: 0.6358 - val_accuracy: 0.6577 - 1s/epoch - 6ms/step
-Epoch 6/20
-182/182 - 1s - loss: 0.6250 - accuracy: 0.6425 - val_loss: 0.6289 - val_accuracy: 0.6591 - 1s/epoch - 7ms/step
-Epoch 7/20
-182/182 - 1s - loss: 0.6193 - accuracy: 0.6466 - val_loss: 0.6316 - val_accuracy: 0.6549 - 1s/epoch - 7ms/step
-Epoch 8/20
-182/182 - 1s - loss: 0.6125 - accuracy: 0.6605 - val_loss: 0.6273 - val_accuracy: 0.6508 - 1s/epoch - 7ms/step
-Epoch 9/20
-182/182 - 1s - loss: 0.6014 - accuracy: 0.6649 - val_loss: 0.6317 - val_accuracy: 0.6529 - 1s/epoch - 8ms/step
-Epoch 10/20
-182/182 - 1s - loss: 0.5948 - accuracy: 0.6727 - val_loss: 0.6277 - val_accuracy: 0.6556 - 1s/epoch - 8ms/step
-Epoch 11/20
-182/182 - 1s - loss: 0.5913 - accuracy: 0.6755 - val_loss: 0.6250 - val_accuracy: 0.6618 - 1s/epoch - 7ms/step
-Epoch 12/20
-182/182 - 1s - loss: 0.5816 - accuracy: 0.6805 - val_loss: 0.6368 - val_accuracy: 0.6322 - 1s/epoch - 7ms/step
-Epoch 13/20
-182/182 - 1s - loss: 0.5810 - accuracy: 0.6779 - val_loss: 0.6328 - val_accuracy: 0.6522 - 1s/epoch - 7ms/step
-Epoch 14/20
-182/182 - 1s - loss: 0.5749 - accuracy: 0.6853 - val_loss: 0.6349 - val_accuracy: 0.6411 - 1s/epoch - 7ms/step
-Epoch 15/20
-182/182 - 1s - loss: 0.5718 - accuracy: 0.6900 - val_loss: 0.6333 - val_accuracy: 0.6501 - 1s/epoch - 7ms/step
-Epoch 16/20
-182/182 - 1s - loss: 0.5553 - accuracy: 0.7007 - val_loss: 0.6409 - val_accuracy: 0.6515 - 1s/epoch - 7ms/step
-Epoch 17/20
-182/182 - 1s - loss: 0.5568 - accuracy: 0.7007 - val_loss: 0.6346 - val_accuracy: 0.6536 - 1s/epoch - 6ms/step
-Epoch 18/20
-182/182 - 1s - loss: 0.5582 - accuracy: 0.6983 - val_loss: 0.6397 - val_accuracy: 0.6370 - 1s/epoch - 6ms/step
-Epoch 19/20
-182/182 - 1s - loss: 0.5497 - accuracy: 0.7024 - val_loss: 0.6463 - val_accuracy: 0.6363 - 1s/epoch - 7ms/step
-Epoch 20/20
-182/182 - 1s - loss: 0.5499 - accuracy: 0.6965 - val_loss: 0.6509 - val_accuracy: 0.6404 - 1s/epoch - 7ms/step
+Jest to wielowarstwowy perceptron z 2 warstwami ukrytymi, po których występuje dropout w celu zapobiegnięcia przetrenowaniu.
+
+Liczby neuronów w warstwach ukrytych zostały dobrane w procesie strojenia i wynoszą 111 i 41.
+
+Funkcje aktywacji warstw ukrytych to relu, a warstwy wyjściowej to sigmoid.
+
+Learning rate został dobrany w procesie strojenia i wynosi 0.003.
+
+Liczba epok została dobrana w procesie strojenia i wynosi 20.
+
 ```
+model = Sequential()
+model.add(Input(shape=(X_train.shape[1])))
+model.add(Dense(units=111, activation="relu"))
+model.add(Dropout(0.5))
+model.add(Dense(units=41, activation="relu"))
+model.add(Dropout(0.5))
+model.add(Dense(1, activation="sigmoid"))
+model.compile(
+    optimizer=Adam(learning_rate=0.003),
+    loss='binary_crossentropy', metrics=['accuracy'])
+```
+
+```
+Epoch 1/20
+182/182 - 3s - loss: 0.6847 - accuracy: 0.5512 - val_loss: 0.6588 - val_accuracy: 0.5990 - 3s/epoch - 16ms/step
+Epoch 2/20
+182/182 - 2s - loss: 0.6599 - accuracy: 0.6037 - val_loss: 0.6484 - val_accuracy: 0.6046 - 2s/epoch - 8ms/step
+Epoch 3/20
+182/182 - 1s - loss: 0.6489 - accuracy: 0.6116 - val_loss: 0.6402 - val_accuracy: 0.6467 - 1s/epoch - 7ms/step
+Epoch 4/20
+182/182 - 1s - loss: 0.6385 - accuracy: 0.6282 - val_loss: 0.6343 - val_accuracy: 0.6418 - 1s/epoch - 7ms/step
+Epoch 5/20
+182/182 - 1s - loss: 0.6302 - accuracy: 0.6361 - val_loss: 0.6338 - val_accuracy: 0.6480 - 1s/epoch - 7ms/step
+Epoch 6/20
+182/182 - 1s - loss: 0.6259 - accuracy: 0.6378 - val_loss: 0.6319 - val_accuracy: 0.6473 - 1s/epoch - 7ms/step
+Epoch 7/20
+182/182 - 1s - loss: 0.6187 - accuracy: 0.6473 - val_loss: 0.6258 - val_accuracy: 0.6418 - 1s/epoch - 7ms/step
+Epoch 8/20
+182/182 - 1s - loss: 0.6135 - accuracy: 0.6573 - val_loss: 0.6302 - val_accuracy: 0.6446 - 1s/epoch - 7ms/step
+Epoch 9/20
+182/182 - 1s - loss: 0.6030 - accuracy: 0.6639 - val_loss: 0.6323 - val_accuracy: 0.6432 - 1s/epoch - 7ms/step
+Epoch 10/20
+182/182 - 1s - loss: 0.6019 - accuracy: 0.6615 - val_loss: 0.6363 - val_accuracy: 0.6377 - 1s/epoch - 6ms/step
+Epoch 11/20
+182/182 - 1s - loss: 0.5919 - accuracy: 0.6703 - val_loss: 0.6393 - val_accuracy: 0.6411 - 1s/epoch - 7ms/step
+Epoch 12/20
+182/182 - 1s - loss: 0.5886 - accuracy: 0.6718 - val_loss: 0.6469 - val_accuracy: 0.6391 - 1s/epoch - 7ms/step
+Epoch 13/20
+182/182 - 1s - loss: 0.5842 - accuracy: 0.6708 - val_loss: 0.6422 - val_accuracy: 0.6404 - 1s/epoch - 7ms/step
+Epoch 14/20
+182/182 - 1s - loss: 0.5789 - accuracy: 0.6820 - val_loss: 0.6475 - val_accuracy: 0.6308 - 1s/epoch - 7ms/step
+Epoch 15/20
+182/182 - 1s - loss: 0.5740 - accuracy: 0.6789 - val_loss: 0.6483 - val_accuracy: 0.6370 - 1s/epoch - 7ms/step
+Epoch 16/20
+182/182 - 1s - loss: 0.5688 - accuracy: 0.6917 - val_loss: 0.6509 - val_accuracy: 0.6480 - 1s/epoch - 8ms/step
+Epoch 17/20
+182/182 - 1s - loss: 0.5706 - accuracy: 0.6862 - val_loss: 0.6488 - val_accuracy: 0.6501 - 1s/epoch - 7ms/step
+Epoch 18/20
+182/182 - 1s - loss: 0.5586 - accuracy: 0.6917 - val_loss: 0.6577 - val_accuracy: 0.6460 - 1s/epoch - 7ms/step
+Epoch 19/20
+182/182 - 1s - loss: 0.5592 - accuracy: 0.6901 - val_loss: 0.6670 - val_accuracy: 0.6446 - 1s/epoch - 7ms/step
+Epoch 20/20
+182/182 - 1s - loss: 0.5545 - accuracy: 0.6972 - val_loss: 0.6560 - val_accuracy: 0.6508 - 1s/epoch - 7ms/step
+```
+
+Poniżej wyniki dla zbiorów testowego, treningowego i wszystkich danych.
 
 ```
 TEST
 46/46 [==============================] - 0s 3ms/step
-Accuracy: 0.6404416839199448
+Accuracy: 0.6507936507936508
 Confusion matrix:
- [[414 320]
- [201 514]]
+ [[366 347]
+ [159 577]]
 Classification report:
                precision    recall  f1-score   support
 
-           0       0.67      0.56      0.61       734
-           1       0.62      0.72      0.66       715
+           0       0.70      0.51      0.59       713
+           1       0.62      0.78      0.70       736
 
-    accuracy                           0.64      1449
-   macro avg       0.64      0.64      0.64      1449
-weighted avg       0.65      0.64      0.64      1449
+    accuracy                           0.65      1449
+   macro avg       0.66      0.65      0.64      1449
+weighted avg       0.66      0.65      0.64      1449
+
+TRAIN
+182/182 [==============================] - 0s 2ms/step
+Accuracy: 0.719489038494735
+Confusion matrix:
+ [[1679 1229]
+ [ 396 2489]]
+Classification report:
+               precision    recall  f1-score   support
+
+           0       0.81      0.58      0.67      2908
+           1       0.67      0.86      0.75      2885
+
+    accuracy                           0.72      5793
+   macro avg       0.74      0.72      0.71      5793
+weighted avg       0.74      0.72      0.71      5793
+
+ALL
+227/227 [==============================] - 0s 2ms/step
+Accuracy: 0.7057442695388014
+Confusion matrix:
+ [[2045 1576]
+ [ 555 3066]]
+Classification report:
+               precision    recall  f1-score   support
+
+           0       0.79      0.56      0.66      3621
+           1       0.66      0.85      0.74      3621
+
+    accuracy                           0.71      7242
+   macro avg       0.72      0.71      0.70      7242
+weighted avg       0.72      0.71      0.70      7242
 ```
 
 ## Porównanie modeli
 
-???
+Jak można zauważyć, model 2 osiąga lepsze wyniki niż model 1 na danych walidaycyjnych.
+
+Model 1 osiąga jednak lepsze wyniki na danych treningowych, co może wskazywać na lepsze dopasowanie się do wzorca w danych.
+
+| Model | Accuracy | Val Accuracy |
+| ----- | -------- | ------------ |
+| 1     | 0.8529   | 0.6155       |
+| 2     | 0.7194   | 0.6507       |
+
+Model drugi spełnił analityczne kryterium sukcesu. Wartość α wynosi 0.6507, czyli jest większa od założonego 0.65.
+
+Dalsze porównanie modeli przeprowadzone zostało podczas testów A/B, opisanych poniżej.
+
+## Strojenie hiperparametrów
+
+Hiperparametry modelu 2 zostały dobrane w procesie strojenia.
+
+Wykorzystaliśmy bibliotekę keras-tuner, która pozwala na automatyczne strojenie hiperparametrów.
+
+Strojenie zostało przeprowadzone dla 4 hiperparametrów. 
+
+- liczba warstw ukrytych
+- liczba neuronów w warstwach ukrytych
+- dropout (tak/nie)
+- learning rate
+
+Wykorzystany został tuner RandomSearch.
+
+Poniżej kod odpowiedzialny za strojenie hiperparametrów.
+
+```
+def build_model(hp):
+    model = Sequential()
+    model.add(Input(shape=(X_train.shape[1])))
+
+    for i in range(hp.Int("num_layers", min_value=1, max_value=3)):
+        model.add(Dense(units=hp.Int(f"units_{i}", min_value=1, max_value=200, step=5), activation="relu"))
+        if hp.Boolean("dropout"):
+            model.add(Dropout(hp.Float("dropout_rate", min_value=0.1, max_value=0.99)))
+
+    model.add(Dense(1, activation="sigmoid"))
+
+    model.compile(optimizer=Adam(learning_rate=hp.Float("learning_rate", min_value=0.001, max_value=0.01, sampling="log")),loss='binary_crossentropy', metrics=['accuracy'])
+
+    return model
+
+tuner = keras_tuner.RandomSearch(
+    hypermodel=build_model,
+    objective="val_accuracy",
+    max_trials=50,
+    executions_per_trial=1,
+    overwrite=True,
+    directory="tuner",
+    project_name="IUM",
+)
+
+tuner.search_space_summary()
+tuner.search(X_train, y_train, epochs=10, validation_data=(X_test, y_test))
+tuner.results_summary()
+```
+
+Wyniki strojenia:
+```
+{'dropout': True, 'learning_rate': 0.003, 'num_layers': 2, 'units_0': 111, 'units_1': 41}
+```
 
 ## Implementacja mikroserwisu
 
-// TODO opis, jakie endpointy, po co, infra, itd
+### Endpointy
+##### W pliku `IUM.postman_collection.json` znajduje się kolekcja Postmana zawierająca wszystkie endpointy, gotowa do przetestowania.
+
+#### `POST /ab_test?user_id={user_id}`
+Służy do zbierania danych do testów A/B. Zwraca wynik predykcji dla podanych danych wejściowych (`genres/favourite_genres`).
+
+Parametr w URL: `user_id` - (ID użytkownika)
+Przykładowe body:
+```
+{
+    "genres": [
+        "album rock",
+        "art rock",
+        "classic rock",
+        "folk rock",
+        "glam rock",
+        "protopunk",
+        "psychedelic rock",
+        "rock"
+    ],
+    "favourite_genres": [
+        "funk",
+        "filmi",
+        "metal"
+    ]
+}
+```
+Przykładowa odpowiedź: `{"skipped": true}`
+
+#### `DELETE /ab_test/results`
+Służy do czyszczenia bazy danych przechowującej wyniki testów A/B.
+
+#### `GET /ab_test/results`
+Zwraca wszystkie dane o testach A/B znajdujące się w naszej bazie danych.
+
+#### `POST /models/{model_id}/predict`
+Zwraca rezultat działania modelu oznaczonego `{model_id}` (1 - RandomForest, 2 - MLP). Dane wejściowe i wyjściowe są w takim samym formacie jak w endpoincie `POST /ab_test`.
+
+Przykładowa odpowiedź: `{"skipped": false}`
+
+### Deployment
+Cały mikroserwis został wzdrożony pod adresem https://ium.rasztabiga.me z użyciem Kubernetesa.
+
+Do uruchomienia lokalnej instancji należy mieć zainstalowanego Dockera. 
+Po przejściu do folderu `microservice/` należy zainstalować wymagane pakiety Pythona poleceniem `pip install -r requirements.txt`. Następnie uruchamiamy bazę danych (MongoDB) poleceniem `docker-compose up` oraz sam mikroserwis zbudowany z użyciem FastAPI poleceniem `./run.sh`.
 
 ## Testy A/B
 
+Proces przeprowadzania testów A/B zawarty został w pliku `ab.ipynb`.
+
+Do testów, ze względu
+// TODO testy a/b sa w pliku ab.ipynb

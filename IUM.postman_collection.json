@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "d882a68f-44b3-45c4-96b5-adf13b504eae",
+		"name": "IUM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1388028",
+		"_collection_link": "https://symmetricaltest.postman.co/workspace/Symmetrical~11210755-3eaa-48a2-bc79-e1ff032e261e/collection/1388028-d882a68f-44b3-45c4-96b5-adf13b504eae?action=share&creator=1388028&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Model 1 predict",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"genres\": [\n        \"album rock\",\n        \"art rock\",\n        \"classic rock\",\n        \"folk rock\",\n        \"glam rock\",\n        \"protopunk\",\n        \"psychedelic rock\",\n        \"rock\"\n    ],\n    \"favourite_genres\": [\n        \"funk\",\n        \"filmi\",\n        \"metal\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ium.rasztabiga.me/models/1/predict",
+					"protocol": "https",
+					"host": [
+						"ium",
+						"rasztabiga",
+						"me"
+					],
+					"path": [
+						"models",
+						"1",
+						"predict"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Model 2 predict",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"genres\": [\n        \"album rock\",\n        \"art rock\",\n        \"classic rock\",\n        \"folk rock\",\n        \"glam rock\",\n        \"protopunk\",\n        \"psychedelic rock\",\n        \"rock\"\n    ],\n    \"favourite_genres\": [\n        \"funk\",\n        \"filmi\",\n        \"metal\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ium.rasztabiga.me/models/2/predict",
+					"protocol": "https",
+					"host": [
+						"ium",
+						"rasztabiga",
+						"me"
+					],
+					"path": [
+						"models",
+						"2",
+						"predict"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clear AB test results",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"genres\": [\n        \"album rock\",\n        \"art rock\",\n        \"classic rock\",\n        \"folk rock\",\n        \"glam rock\",\n        \"protopunk\",\n        \"psychedelic rock\",\n        \"rock\"\n    ],\n    \"favourite_genres\": [\n        \"funk\",\n        \"filmi\",\n        \"metal\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ium.rasztabiga.me/ab_test/results",
+					"protocol": "https",
+					"host": [
+						"ium",
+						"rasztabiga",
+						"me"
+					],
+					"path": [
+						"ab_test",
+						"results"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Perform AB test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"genres\": [\n        \"album rock\",\n        \"art rock\",\n        \"classic rock\",\n        \"folk rock\",\n        \"glam rock\",\n        \"protopunk\",\n        \"psychedelic rock\",\n        \"rock\"\n    ],\n    \"favourite_genres\": [\n        \"funk\",\n        \"filmi\",\n        \"metal\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ium.rasztabiga.me/ab_test?user_id=101",
+					"protocol": "https",
+					"host": [
+						"ium",
+						"rasztabiga",
+						"me"
+					],
+					"path": [
+						"ab_test"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "101"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get AB test results",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"genres\": [\n        \"album rock\",\n        \"art rock\",\n        \"classic rock\",\n        \"folk rock\",\n        \"glam rock\",\n        \"protopunk\",\n        \"psychedelic rock\",\n        \"rock\"\n    ],\n    \"favourite_genres\": [\n        \"funk\",\n        \"filmi\",\n        \"metal\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ium.rasztabiga.me/ab_test/results",
+					"protocol": "https",
+					"host": [
+						"ium",
+						"rasztabiga",
+						"me"
+					],
+					"path": [
+						"ab_test",
+						"results"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

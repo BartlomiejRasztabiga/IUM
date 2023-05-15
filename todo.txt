@@ -1,3 +1,0 @@
-– raport z procesu budowy
-– porównanie modeli (forest vs MLP)
-– porównanie modeli przy pomocy a/b?
